@@ -3,7 +3,7 @@
 /**
  * This file is part of the T3DatatablesBundle package.
  *
- * (c) stwe <https://github.com/stwe/DatatablesBundle>
+ * (c) stwe <https://github.com/t3cnologic/T3-DatatablesBundle>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
