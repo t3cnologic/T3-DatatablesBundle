@@ -1,0 +1,19 @@
+services:
+    t3_datatables.serializer.method:
+        class: Symfony\Component\Serializer\Normalizer\GetSetMethodNormalizer
+    t3_datatables.serializer.encoder.json:
+        class: Symfony\Component\Serializer\Encoder\JsonEncoder
+    t3_datatables.serializer:
+        class: Symfony\Component\Serializer\Serializer
+        arguments:
+            - [@t3_datatables.serializer.method]
+            - [@t3_datatables.serializer.encoder.json]
+    t3_datatables.twig.extension:
+        class: T3\DatatablesBundle\Twig\DatatableTwigExtension
+        arguments: [@translator]
+        tags:
+            - { name: twig.extension }
+    t3_datatables.datatable:
+        class: T3\DatatablesBundle\Datatable\Data\DatatableDataManager
+        scope: request
+        arguments: [@doctrine, @request, @t3_datatables.serializer]
