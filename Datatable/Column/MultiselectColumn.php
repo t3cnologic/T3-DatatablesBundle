@@ -90,7 +90,7 @@ class MultiselectColumn extends ActionColumn
             throw new InvalidArgumentException("The 'value' attribute is not supported.");
         }
         if (array_key_exists("name", $this->attributes)) {
-            $this->attributes["name"] = "multiselect_checkbox " . $this->attributes["name"];
+            $this->attributes["name"] = $this->attributes["name"];
         } else {
             $this->attributes["name"] = "multiselect_checkbox";
         }

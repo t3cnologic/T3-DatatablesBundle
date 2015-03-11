@@ -256,6 +256,7 @@ abstract class AbstractDatatableView implements DatatableViewInterface
 
         $options["view_use_integration_options"] = $this->useIntegrationOptions;
 
+
         switch($type) {
             case 'html':
                 return $this->templating->render($this->templates['html'], $options);

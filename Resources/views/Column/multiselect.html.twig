@@ -14,7 +14,11 @@
     "name": "{{ column.name }}",
     "orderable": false,
     "searchable": false,
-    "title": "<input type='checkbox' name='multiselect_checkall' class='multiselect_checkall' />",
+    {% if column.title %}
+        "title": "{{ column.title }}",
+    {% else %}
+        "title": "<input type='checkbox' name='multiselect_checkall' class='multiselect_checkall' />",
+    {% endif %}
     {% if column.type %}
         "type": "{{ column.type }}",
     {% endif %}
@@ -37,6 +41,8 @@
         var endHtml = "";
         var attributes = "";
 
+        var checked = false;
+
         {# start_html #}
         {% if column.startHtml %}
             startHtml = '{{ column.startHtml|raw }}';
@@ -49,7 +55,14 @@
 
         {# attributes #}
         {% for key, value in column.attributes %}
-            attributes += '{{ key }}="{{ value }}" ';
+            {% if key == 'checked' %}
+                if(row.{{ value }} == 1)
+                {
+                    checked = true;
+                }
+            {% else %}
+                attributes += "{{ key }}='{{ value }}' ";
+            {% endif %}
         {% endfor %}
 
         {# get id #}
@@ -70,6 +83,7 @@
             custom += first;
             custom += "'";
             custom += attributes;
+            if( checked ) custom += " checked='checked' ";
             custom += "/>"
             custom += endHtml;
 
