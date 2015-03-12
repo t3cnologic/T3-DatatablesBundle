@@ -38,6 +38,8 @@
             actionsString += '{{ column.startHtml|raw }}';
         {% endif %}
 
+        var linkValues = "";
+
         var routeParameters, attributes, visibleFlag, roleFlag;
 
         {% for action in column.actions %}
@@ -67,6 +69,38 @@
                 {% for key, value in action.attributes %}
                     {% if key == 'data-value' %}
                         attributes += '{{ key }}="'+ row.{{ value }} + '" ';
+                    {% elseif key == 'check-values' %}
+
+                        var _valuesComma = '{{ value.values }}';
+                        valuesComma = _valuesComma.split(",");
+
+                        var _concatenateComma = '{{ value.concatenate }}';
+                        concatenateComma = _concatenateComma.split(",");
+
+                        var valueFinal = 'eci';
+
+                        for (var i = 0; i < valuesComma.length; i++) {
+                            if( row[valuesComma[i]] != null )
+                            {
+                                valueFinal = valuesComma[i];
+                                linkValues = concatenateComma[i] + row[valuesComma[i]];
+                                break;
+                            }
+                        }
+
+                        var baseURL = '{{ asset("bundles/public/images/social/") }}';
+                        valueFinal = valueFinal.replace('_id', '');
+                        var urlImg = baseURL+valueFinal+"-icon.png";
+                        var target = 'target="_blank"';
+
+                        if( valueFinal == 'eci' )
+                        {
+                            linkValues = '#';
+                            target = '';
+                        }
+
+                        return '<a href="'+linkValues+'" '+target+'><img src="' + urlImg + '" class="img-responsive"  width="40"></a>';
+
                     {% else %}
                         attributes += '{{ key }}="{{ value }}" ';
                     {% endif %}
